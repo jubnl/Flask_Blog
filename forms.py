@@ -206,3 +206,52 @@ class UpdateAccountForm(FlaskForm):
             user = Model("t_users").query_one_row(filter=filter)
             if user:
                 raise ValidationError('That email is taken. Please choose a different one.')
+            
+
+
+
+class AdminUserForm(FlaskForm):
+    
+    model = Model("t_permissions")
+    query = model.query_all_rows()
+    
+    choices =[]
+    for i in query:
+        choices.append(i['permission'])
+    
+    permission = SelectField("Permission", choices=choices)
+    
+    username = StringField('Nom d\'utilisateur',
+                           validators=[DataRequired(), Length(min=2, max=20)])
+    email = StringField('Email',
+                        validators=[DataRequired(), Email()])
+    
+    model = Model("t_genders")
+    query = model.query_all_rows(fields=['gender'])
+    choices = []
+    for i in query:
+        choices.append(i['gender'])
+    
+    gender = SelectField("Genre",
+        validators=[
+            DataRequired(message="Veuillez séléctionner un genre")
+        ],
+        choices=choices
+    )
+    
+    model = Model("t_countries")
+    filter = Filter(order_by={'name':'ASC'})
+    query = model.query_all_rows(fields=['name'])
+    choices = []
+    for i in query:
+        choices.append(i['name'])
+    
+    
+    country = SelectField('Pays',
+        validators=[
+            DataRequired(message="Veuillez selectionner un pays.")
+        ],
+        choices=choices
+    )
+    submit = SubmitField('Update')
+    
