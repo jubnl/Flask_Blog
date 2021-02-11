@@ -442,5 +442,12 @@ def admin_delete_user(username):
     return render_template("admin/delete_user.html", title="Supression d'un utilisateur")
 
 
+@app.route("/admin/logs", methods=['POST', 'GET'])
+@is_user_logged_in
+@is_admin
+def logs():
+    return render_template("admin/logs.html", title="Logs")
+
+
 if __name__ == '__main__':
     app.run(debug=True)
