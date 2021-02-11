@@ -21,6 +21,17 @@ SET time_zone = "+00:00";
 -- Base de données : `flask_blog`
 --
 
+-- Détection si une autre base de donnée du même nom existe
+DROP DATABASE IF EXISTS flask_blog;
+
+-- Création d'un nouvelle base de donnée
+
+CREATE DATABASE IF NOT EXISTS flask_blog;
+
+-- Utilisation de cette base de donnée
+
+USE flask_blog;
+
 -- --------------------------------------------------------
 
 --
