@@ -14,7 +14,13 @@ from flask import Flask
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = '81016bdd78c9af84f475360d3f045f33'
+# CHANGE THAT KEY TO YOUR OWN KEY !
+# you can do that by oppening a python prompt and type :
+# >>> import secrets
+# >>> secrets.token_hex()
+# 'd636881cff3a920fffd007dd5f4222cd140ffc68e3d83223ac84adcd027e19b3'
+
+app.config['SECRET_KEY'] = 'd636881cff3a920fffd007dd5f4222cd140ffc68e3d83223ac84adcd027e19b3'
 
 
 app.register_blueprint(account_page)
