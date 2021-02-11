@@ -18,7 +18,7 @@ def is_user_logged_in(f):
             return f(*args, **kwargs)
         else:
             flash('Veuillez vous connecter pour accéder à cette ressource.', 'danger')
-            return redirect(url_for('login'))
+            return redirect(url_for('authentification.login'))
     return wrap
 
 # decorator that check if a user is admin
