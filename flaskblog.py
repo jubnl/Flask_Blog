@@ -12,7 +12,8 @@ from flask import (
     url_for, flash,
     redirect,
     request,
-    session
+    session,
+    abort
 )
 
 
@@ -37,6 +38,9 @@ posts = [
     }
 ]
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html', title="404"), 404
 
 # decorator that check if a user is logged in
 def is_user_logged_in(f):
@@ -182,10 +186,9 @@ def login():
                 session['lname'] = query['last_name']
                 session['gender'] = query['gender']
                 session['country'] = query['country']
-                session['password'] = db_password
                 session['perms'] = query['permission']
-                
-                                
+
+
                 # if remember me check box is checked, set session to permanent
                 if form.remember.data is True:
                     session.permanent = True
@@ -289,10 +292,9 @@ def account():
                     return redirect(url_for('account'))
             
             # change password
-            if form.confirm_old_password.data != "" or form.confirm_new_password.data == "" or form.new_password.data == "":
+            if form.confirm_old_password.data != "" and form.confirm_new_password.data != "" and form.new_password.data != "":
                 phash = sha256_crypt.hash(str(form.confirm_new_password.data))
                 
-                session['password'] = phash
                 query = model.update_rows(fields_values={'password':phash}, filter=filter)
                 
 
@@ -405,6 +407,8 @@ def admin_edit_user(username):
     model = Model("t_users")
     filter = Filter(where=f"`username` = '{username}'")
     user = model.query_one_row(filter = filter)
+    if user is None:
+        abort(404)
     
     model = Model("t_permissions")
     filter = Filter(where=f"`id` = {user['permission']}")
@@ -435,7 +439,7 @@ def admin_edit_user(username):
 @is_user_logged_in
 @is_admin
 def admin_delete_user(username):
-    return render_template("admin/delete_user.html", title="Supression d'un utilisateur", form=form)
+    return render_template("admin/delete_user.html", title="Supression d'un utilisateur")
 
 
 if __name__ == '__main__':
