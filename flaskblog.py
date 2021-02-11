@@ -449,5 +449,12 @@ def logs():
     return render_template("admin/logs.html", title="Logs")
 
 
+@app.route("/admin/posts", methods=['POST', 'GET'])
+@is_user_logged_in
+@is_admin
+def admin_posts():
+    return render_template("admin/posts.html", title="Logs")
+
+
 if __name__ == '__main__':
     app.run(debug=True)
