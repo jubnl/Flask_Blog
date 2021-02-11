@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method="" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Log Info {{ form.id.data }}</legend>
+                <div class="form-group">
+                    {{ form.log_date.label(class="form-control-label") }}
+                    {{ form.log_date(class="form-control form-control-lg", readonly=True) }}
+                </div>
+                <div class="form-group">
+                    {{ form.user_id.label(class="form-control-label") }}
+                    {{ form.user_id(class="form-control form-control-lg", readonly=True) }}
+                    {% if form.user_id.data != "Flask" %}
+                        <a class="btn btn-block btn-secondary mt-3" href="{{ url_for('admin_edit_user', username=form.user_id.data) }}">User profile</a>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.log_type_id.label(class="form-control-label") }}
+                    {{ form.log_type_id(class="form-control form-control-lg", readonly=True) }}
+                </div>
+                <div class="form-group">
+                    {{ form.sql_executed.label(class="form-control-label") }}
+                    {{ form.sql_executed(class="form-control form-control-lg", readonly=True) }}
+                </div>
+                <div class="form-group">
+                    {{ form.success.label(class="form-control-label") }}
+                    {{ form.success(class="form-control form-control-lg", readonly=True) }}
+                </div>
+                {% if form.success.data == True %}
+                    {% if "Update" in form.log_type_id.data %}
+                        <div class="form-group">
+                            {{ form.value_before.label(class="form-control-label") }}
+                            {{ form.value_before(class="form-control form-control-lg", readonly=True) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.value_after.label(class="form-control-label") }}
+                            {{ form.value_after(class="form-control form-control-lg", readonly=True) }}
+                        </div>
+                    {% elif "Delete" in form.log_type_id.data %}
+                        <div class="form-group">
+                            {{ form.deleted_data.label(class="form-control-label") }}
+                            {{ form.deleted_data(class="form-control form-control-lg", readonly=True) }}
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="form-group">
+                        {{ form.error_message.label(class="form-control-label") }}
+                        {{ form.error_message(class="form-control form-control-lg", readonly=True) }}
+                    </div>
+                {% endif %}
+                <a class="btn btn-block btn-secondary" href="{{ url_for('logs') }}">Get back to logs</a>
+            </fieldset>
+        </form>
+    </div>
+{% endblock content %}

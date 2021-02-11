@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField, IntegerField, TextAreaField
 from flask_wtf.file import FileField, FileAllowed
 from wtforms.validators import DataRequired, Length, Email, EqualTo, Regexp, ValidationError
 from models.model import Model
@@ -255,3 +255,26 @@ class AdminUserForm(FlaskForm):
     )
     submit = SubmitField('Update')
     
+    
+
+class LogsForm(FlaskForm):
+    
+    id = IntegerField("ID")
+    
+    user_id = StringField("Username")
+    
+    log_type_id = StringField("Log type")
+    
+    sql_executed = TextAreaField("SQL executed")
+    
+    value_before = StringField("Value before")
+    
+    value_after = StringField("Value after")
+    
+    success = StringField("Success")
+    
+    log_date = StringField("Log date")
+    
+    error_message = StringField("Error message")
+    
+    deleted_data = TextAreaField("Deleted datas")
