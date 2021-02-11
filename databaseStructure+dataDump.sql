@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : jeu. 11 fév. 2021 à 09:42
+-- Généré le : jeu. 11 fév. 2021 à 18:17
 -- Version du serveur :  10.4.17-MariaDB
 -- Version de PHP : 7.4.11
 
@@ -310,14 +310,24 @@ INSERT INTO `t_genders` (`id`, `gender`) VALUES
 
 CREATE TABLE `t_logs` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `log_type_id` int(11) NOT NULL,
   `sql_executed` text NOT NULL,
-  `value_before` varchar(255) NOT NULL,
-  `value_after` varchar(255) NOT NULL,
+  `value_before` varchar(255) DEFAULT NULL,
+  `value_after` varchar(255) DEFAULT NULL,
   `success` tinyint(1) NOT NULL,
+  `error_message` varchar(255) DEFAULT NULL,
+  `deleted_data` text DEFAULT NULL,
   `log_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `t_logs`
+--
+
+INSERT INTO `t_logs` (`id`, `user_id`, `log_type_id`, `sql_executed`, `value_before`, `value_after`, `success`, `error_message`, `deleted_data`, `log_date`) VALUES
+(1, NULL, 14, 'INSERT INTO t_users (`permission`, `first_name`, `last_name`, `email`, `country`, `username`, `password`, `reset_password_permission`, `files`, `gender`, `reset_password_random`) VALUES (1, \'asdf\', \'asdf\', \'a@a.com\', 1, \'Jack\', \'$5$rounds=535000$kkQXTD5OouRxuyvH$AYMK5mB9SlD8TVTMgjrx7FC5zrjVu85cMZBKH7f3S78\', \'no_reset\', \'admin.png\', 1, \'Default_value\')', NULL, NULL, 0, '(1062, Duplicate entry \'Jack\' for key \'username unique\')', NULL, '2021-02-11 17:09:25'),
+(2, NULL, 14, 'INSERT INTO t_users (`permission`, `first_name`, `last_name`, `email`, `country`, `username`, `password`, `reset_password_permission`, `files`, `gender`, `reset_password_random`) VALUES (1, \'ad\', \'sadd\', \'a@a.com\', 1, \'Jack\', \'$5$rounds=535000$H3DfQPnQfe6KovyR$ym/OeOim11dbzh0yeyrPl1/rELsHSivA9LSHwq4bVm2\', \'no_reset\', \'admin.png\', 1, \'Default_value\')', NULL, NULL, 0, '(1062, \"Duplicate entry \'Jack\' for key \'username unique\'\")', NULL, '2021-02-11 17:34:26');
 
 -- --------------------------------------------------------
 
@@ -336,31 +346,31 @@ CREATE TABLE `t_log_types` (
 --
 
 INSERT INTO `t_log_types` (`id`, `log_type`, `designation`) VALUES
-(5, 'add_country', 'Add a country'),
-(6, 'delete_country', 'Delete a country'),
-(7, 'update_coutry', 'Update a country'),
-(8, 'add_gender', 'Add a gender'),
-(9, 'delete_gender', 'Delete a gender'),
-(10, 'update_gender', 'Update a gender'),
-(11, 'add_permission', 'Add a permission'),
-(12, 'delete_permission', 'Delete a permission'),
-(13, 'update_permission', 'Update a permission'),
-(14, 'add_user', 'Add a user'),
-(15, 'delete_user', 'Delete a user'),
-(16, 'update_user_permission', 'Update a user\'s permission'),
-(17, 'update_user_fname', 'Update a user\'s first name'),
-(18, 'update_user_lname', 'Update a user\'s last name'),
-(19, 'update_user_email', 'Update a user\'s email'),
-(20, 'update_user_gender', 'Update a user\'s gender'),
-(21, 'update_user_country', 'Update a user\'s country'),
-(22, 'update_user_username', 'Update a user\'s username'),
-(23, 'update_user_password', 'Update a user\'s password'),
-(24, 'update_user_reset_password_permission', 'Update a user\'s reset permission'),
-(25, 'update_user_reset_password_random', 'Update a user\'s key to reset his password'),
-(26, 'update_user_files', 'Update a user\'s profile picture'),
-(27, 'add_post', 'Add a post'),
-(28, 'delete_post', 'Delete a post'),
-(29, 'update_post', 'Update a post');
+(1, 'add_country', 'Add a country'),
+(2, 'delete_country', 'Delete a country'),
+(3, 'update_coutry', 'Update a country'),
+(4, 'add_gender', 'Add a gender'),
+(5, 'delete_gender', 'Delete a gender'),
+(6, 'update_gender', 'Update a gender'),
+(7, 'add_permission', 'Add a permission'),
+(8, 'delete_permission', 'Delete a permission'),
+(9, 'update_permission', 'Update a permission'),
+(10, 'add_user', 'Add a user'),
+(11, 'delete_user', 'Delete a user'),
+(12, 'update_user_permission', 'Update a user\'s permission'),
+(13, 'update_user_fname', 'Update a user\'s first name'),
+(14, 'update_user_lname', 'Update a user\'s last name'),
+(15, 'update_user_email', 'Update a user\'s email'),
+(16, 'update_user_gender', 'Update a user\'s gender'),
+(17, 'update_user_country', 'Update a user\'s country'),
+(18, 'update_user_username', 'Update a user\'s username'),
+(19, 'update_user_password', 'Update a user\'s password'),
+(20, 'update_user_reset_password_permission', 'Update a user\'s reset permission'),
+(21, 'update_user_reset_password_random', 'Update a user\'s key to reset his password'),
+(22, 'update_user_files', 'Update a user\'s profile picture'),
+(23, 'add_post', 'Add a post'),
+(24, 'delete_post', 'Delete a post'),
+(25, 'update_post', 'Update a post');
 
 -- --------------------------------------------------------
 
@@ -424,7 +434,7 @@ CREATE TABLE `t_users` (
 --
 
 INSERT INTO `t_users` (`id`, `permission`, `first_name`, `last_name`, `email`, `gender`, `country`, `username`, `password`, `reset_password_permission`, `reset_password_random`, `files`, `register_date`) VALUES
-(32, 3, 'Jack', 'OWheel', 'exemple@exemple.com', 3, 98, 'Jack', '$5$rounds=535000$MQt8BJ0dVoLMHmGU$QmEmV5ywx.bAXHvwSv6j/3XgK7nPSLhLiAbx7JhThq4', 'no_reset', 'Default_value', 'admin.png', '2021-02-11 09:41:59');
+(1, 3, 'Jack', 'OWheel', 'exemple@exemple.com', 3, 98, 'Jack', '$5$rounds=535000$MQt8BJ0dVoLMHmGU$QmEmV5ywx.bAXHvwSv6j/3XgK7nPSLhLiAbx7JhThq4', 'no_reset', 'Default_value', 'admin.png', '2021-02-11 09:41:59');
 
 --
 -- Index pour les tables déchargées
@@ -500,13 +510,13 @@ ALTER TABLE `t_genders`
 -- AUTO_INCREMENT pour la table `t_logs`
 --
 ALTER TABLE `t_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `t_log_types`
 --
 ALTER TABLE `t_log_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT pour la table `t_permissions`
@@ -524,7 +534,7 @@ ALTER TABLE `t_posts`
 -- AUTO_INCREMENT pour la table `t_users`
 --
 ALTER TABLE `t_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Contraintes pour les tables déchargées
