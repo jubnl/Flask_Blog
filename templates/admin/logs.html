@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
+    <a  class="btn btn-block btn-secondary mb-4" href="{{ url_for('admin_page.admin') }}">Back to the admin page</a>
     <table class="table">
         <thead>
         <tr>
@@ -19,7 +20,7 @@
                 <td>{{ log['user_id']}}</td>
                 <td>{{ log['log_type_id']}}</td>
                 <td>{{ log['success'] }}</td>
-                <td><a class="btn btn-secondary" href="{{ url_for('log', id = log['id']) }}">Detail</a></td>
+                <td><a class="btn btn-secondary" href="{{ url_for('admin_logs_page.log', id = log['id']) }}">Detail</a></td>
             </tr>
         {% endfor %}
         </tbody>

@@ -22,20 +22,20 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarToggle">
                         <div class="navbar-nav mr-auto">
-                            <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
-                            <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
+                            <a class="nav-item nav-link" href="{{ url_for('home_page.home') }}">Home</a>
+                            <a class="nav-item nav-link" href="{{ url_for('home_page.about') }}">About</a>
                         </div>
                         <!-- Navbar Right Side -->
                         <div class="navbar-nav">
                             {% if session.user_logged_in %}
                                 {% if session.perms == 3 %}
-                                    <a class="nav-item nav-link" href="{{ url_for('admin') }}">Admin</a>
+                                    <a class="nav-item nav-link" href="{{ url_for('admin_page.admin') }}">Admin</a>
                                 {% endif %}
-                                <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
-                                <a class="nav-item nav-link" href="{{ url_for('logout') }}">logout</a>
+                                <a class="nav-item nav-link" href="{{ url_for('account_page.account') }}">Account</a>
+                                <a class="nav-item nav-link" href="{{ url_for('authentification.logout') }}">logout</a>
                             {% else %}
-                                <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
-                                <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+                                <a class="nav-item nav-link" href="{{ url_for('authentification.login') }}">Login</a>
+                                <a class="nav-item nav-link" href="{{ url_for('registration.register') }}">Register</a>
                             {% endif %}
                         </div>
                     </div>

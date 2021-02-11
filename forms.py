@@ -193,11 +193,12 @@ class UpdateAccountForm(FlaskForm):
                 raise ValidationError('That username is taken. Please choose a different one.')
     
     def validate_confirm_old_password(self, confirm_old_password):
+        password = Model("t_users").query_one_row(filter=Filter(where=f"`username` = '{session['user_username']}'"), fields=['password'])['password']
         if self.new_password.data == "" or self.confirm_new_password.data == "" or confirm_old_password.data == "":
             return
         if confirm_old_password.data == self.confirm_new_password.data:
             raise ValidationError("Votre ancien mot de passe et votre nouveau mot de passe doivent être différents !")
-        if not sha256_crypt.verify(confirm_old_password.data, session['password']):
+        if not sha256_crypt.verify(confirm_old_password.data, password):
             raise ValidationError("L'ancien mot de passe n'est pas correct.")
 
     def validate_email(self, email):

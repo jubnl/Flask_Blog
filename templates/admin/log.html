@@ -13,7 +13,7 @@
                     {{ form.user_id.label(class="form-control-label") }}
                     {{ form.user_id(class="form-control form-control-lg", readonly=True) }}
                     {% if form.user_id.data != "Flask" %}
-                        <a class="btn btn-block btn-secondary mt-3" href="{{ url_for('admin_edit_user', username=form.user_id.data) }}">User profile</a>
+                        <a class="btn btn-block btn-secondary mt-3" href="{{ url_for('admin_users_page.admin_edit_user', username=form.user_id.data) }}">User profile</a>
                     {% endif %}
                 </div>
                 <div class="form-group">
@@ -50,7 +50,7 @@
                         {{ form.error_message(class="form-control form-control-lg", readonly=True) }}
                     </div>
                 {% endif %}
-                <a class="btn btn-block btn-secondary" href="{{ url_for('logs') }}">Get back to logs</a>
+                <a class="btn btn-block btn-secondary" href="{{ url_for('admin_logs_page.logs') }}">Get back to logs</a>
             </fieldset>
         </form>
     </div>
