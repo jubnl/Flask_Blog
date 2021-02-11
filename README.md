@@ -17,8 +17,8 @@ Enjoy !
 Veuillez ouvrir une issue en cas de problème !
 
 Il y a un compte admin existant de base :
-email : exemple@exemple.com
-password : Exemple123$
+- email : exemple@exemple.com
+- password : Exemple123$
 
 ## Petite précision
 
