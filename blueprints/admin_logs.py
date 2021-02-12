@@ -19,7 +19,7 @@ admin_logs_page = Blueprint("admin_logs_page", __name__, template_folder="templa
 @is_user_logged_in
 @is_admin
 def logs():
-    logs = Model("t_logs").query_all_rows()
+    logs = Model("t_logs").query_all_rows(filter=Filter(order_by={'id':'DESC'}))
     for log in logs:
         
         filter = Filter(where=f"`id` = {log['user_id']}")

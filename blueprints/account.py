@@ -40,58 +40,181 @@ def account():
                 picture_file = save_picture(form.picture.data)
                 session['files'] = picture_file
 
-                query = model.update_rows(fields_values={'files':picture_file}, filter=filter)
+                sql, query = model.update_rows(fields_values={'files':picture_file}, filter=filter, return_sql_query=True)
+                
+                sql = str(sql).replace('"', r'\"')
+                sql = sql.replace("'", r"\'")
+                
+                insert_log = {
+                    'user_id'       : query_user['id'],
+                    'log_type_id'   : Model("t_log_types").query_one_row(filter=Filter(where="`log_type` = 'update_user_files'"), fields= ['id'])['id'],
+                    'sql_executed'  : sql,
+                    'value_before'  : query_user['files'],
+                    'value_after'   : picture_file,
+                    'success'       : 1
+                }
+                
                 if query is not True:
-                    flash(f'An error occured while updating your account.. {query} picture', 'danger')
+                    
+                    query_str = str(query).replace('"', r'\"')
+                    query_str = query_str.replace("'", r"\'")
+                    
+                    insert_log['success'] = 0
+                    insert_log['error_message'] = query_str
+                    
+                    flash(f'An error occured while updating your account..', 'danger')
                     return redirect(url_for('account_page.account'))
+                
+                log = Model("t_logs").insert_into_single_record(fields_values=insert_log)
 
             # change username
             if form.username.data != session['user_username']:
                 session["user_username"] = form.username.data
-                query = model.update_rows(fields_values={'username':form.username.data}, filter=filter)
+                sql, query = model.update_rows(fields_values={'username':form.username.data}, filter=filter, return_sql_query=True)
+                
+                sql = str(sql).replace('"', r'\"')
+                sql = sql.replace("'", r"\'")
+                
+                insert_log = {
+                    'user_id'       : query_user['id'],
+                    'log_type_id'   : Model("t_log_types").query_one_row(filter=Filter(where="`log_type` = 'update_user_username'"), fields= ['id'])['id'],
+                    'sql_executed'  : sql,
+                    'value_before'  : query_user['username'],
+                    'value_after'   : form.username.data,
+                    'success'       : 1
+                }
                 
                 if query is not True:
-                    flash(f'An error occured while updating your account.. {query} username', 'danger')
+                    
+                    query_str = str(query).replace('"', r'\"')
+                    query_str = query_str.replace("'", r"\'")
+                    
+                    insert_log['success'] = 0
+                    insert_log['error_message'] = query_str
+                    
+                    flash(f'An error occured while updating your account..', 'danger')
                     return redirect(url_for('account_page.account'))
-            
+                log = Model("t_logs").insert_into_single_record(fields_values=insert_log)
+                
             # change email
             if form.email.data != session['user_email']:
                 session["user_email"] = form.email.data
-                query = model.update_rows(fields_values={'email':form.email.data}, filter=filter)
+                sql, query = model.update_rows(fields_values={'email':form.email.data}, filter=filter, return_sql_query=True)
+                
+                
+                sql = str(sql).replace('"', r'\"')
+                sql = sql.replace("'", r"\'")
+                
+                insert_log = {
+                    'user_id'       : query_user['id'],
+                    'log_type_id'   : Model("t_log_types").query_one_row(filter=Filter(where="`log_type` = 'update_user_email'"), fields= ['id'])['id'],
+                    'sql_executed'  : sql,
+                    'value_before'  : query_user['email'],
+                    'value_after'   : form.email.data,
+                    'success'       : 1
+                }
                 
                 if query is not True:
-                    flash(f'An error occured while updating your account.. {query} email', 'danger')
+                    
+                    query_str = str(query).replace('"', r'\"')
+                    query_str = query_str.replace("'", r"\'")
+                    
+                    insert_log['success'] = 0
+                    insert_log['error_message'] = query_str
+                    
+                    flash(f'An error occured while updating your account..', 'danger')
                     return redirect(url_for('account_page.account'))
-            
+                log = Model("t_logs").insert_into_single_record(fields_values=insert_log)
+                
             # change fname
             if form.fname.data != session['fname']:
                 session['fname'] = form.fname.data
-                query = model.update_rows(fields_values={'first_name':form.fname.data}, filter=filter)
+                sql, query = model.update_rows(fields_values={'first_name':form.fname.data}, filter=filter, return_sql_query=True)
+                
+                sql = str(sql).replace('"', r'\"')
+                sql = sql.replace("'", r"\'")
+                
+                insert_log = {
+                    'user_id'       : query_user['id'],
+                    'log_type_id'   : Model("t_log_types").query_one_row(filter=Filter(where="`log_type` = 'update_user_fname'"), fields= ['id'])['id'],
+                    'sql_executed'  : sql,
+                    'value_before'  : query_user['first_name'],
+                    'value_after'   : form.fname.data,
+                    'success'       : 1
+                }
 
                 if query is not True:
+                    
+                    query_str = str(query).replace('"', r'\"')
+                    query_str = query_str.replace("'", r"\'")
+                    
+                    insert_log['success'] = 0
+                    insert_log['error_message'] = query_str
+                    
                     flash(f'An error occured while updating your account.. {query} fname', 'danger')
                     return redirect(url_for('account_page.account'))
-            
+                log = Model("t_logs").insert_into_single_record(fields_values=insert_log)
+                
             # change lname
             if form.lname.data != session['lname']:
                 session['lname'] = form.lname.data
-                query = model.update_rows(fields_values={'last_name':form.lname.data}, filter=filter)
+                sql, query = model.update_rows(fields_values={'last_name':form.lname.data}, filter=filter, return_sql_query=True)
+                
+                
+                sql = str(sql).replace('"', r'\"')
+                sql = sql.replace("'", r"\'")
+                
+                insert_log = {
+                    'user_id'       : query_user['id'],
+                    'log_type_id'   : Model("t_log_types").query_one_row(filter=Filter(where="`log_type` = 'update_user_lname'"), fields= ['id'])['id'],
+                    'sql_executed'  : sql,
+                    'value_before'  : query_user['last_name'],
+                    'value_after'   : form.lname.data,
+                    'success'       : 1
+                }
 
                 if query is not True:
+                    
+                    query_str = str(query).replace('"', r'\"')
+                    query_str = query_str.replace("'", r"\'")
+                    
+                    insert_log['success'] = 0
+                    insert_log['error_message'] = query_str
+                    
                     flash(f'An error occured while updating your account.. {query} lname', 'danger')
                     return redirect(url_for('account_page.account'))
-            
+                log = Model("t_logs").insert_into_single_record(fields_values=insert_log)
+                
             # change password
             if form.confirm_old_password.data != "" and form.confirm_new_password.data != "" and form.new_password.data != "":
                 phash = sha256_crypt.hash(str(form.confirm_new_password.data))
                 
-                query = model.update_rows(fields_values={'password':phash}, filter=filter)
+                sql, query = model.update_rows(fields_values={'password':phash}, filter=filter, return_sql_query=True)
+                
+                sql = str(sql).replace('"', r'\"')
+                sql = sql.replace("'", r"\'")
+                
+                insert_log = {
+                    'user_id'       : query_user['id'],
+                    'log_type_id'   : Model("t_log_types").query_one_row(filter=Filter(where="`log_type` = 'update_user_password'"), fields= ['id'])['id'],
+                    'sql_executed'  : sql,
+                    'value_before'  : query_user['password'],
+                    'value_after'   : phash,
+                    'success'       : 1
+                }
                 
 
                 if query is not True:
-                    flash(f'An error occured while updating your account.. {query} password', 'danger')
+                    
+                    query_str = str(query).replace('"', r'\"')
+                    query_str = query_str.replace("'", r"\'")
+                    
+                    insert_log['success'] = 0
+                    insert_log['error_message'] = query_str
+                    
+                    flash(f'An error occured while updating your account..', 'danger')
                     return redirect(url_for('account_page.account'))
-            
+                log = Model("t_logs").insert_into_single_record(fields_values=insert_log)
             
             # query country id
             model = Model("t_countries")
@@ -106,12 +229,34 @@ def account():
                 model = Model("t_users")
                 filter = Filter(where=f"`id` = {query_user['id']}") 
                 session['country'] = country
-                query = model.update_rows(fields_values={'country':country}, filter=filter)
+                sql, query = model.update_rows(fields_values={'country':country}, filter=filter, return_sql_query=True)
+                
+                
+                sql = str(sql).replace('"', r'\"')
+                sql = sql.replace("'", r"\'")
+                
+                insert_log = {
+                    'user_id'       : query_user['id'],
+                    'log_type_id'   : Model("t_log_types").query_one_row(filter=Filter(where="`log_type` = 'update_user_country'"), fields= ['id'])['id'],
+                    'sql_executed'  : sql,
+                    'value_before'  : query_user['country'],
+                    'value_after'   : country,
+                    'success'       : 1
+                }
+                
 
                 if query is not True:
-                    flash(f'An error occured while updating your account.. {query} : country block', 'danger')
+                    
+                    query_str = str(query).replace('"', r'\"')
+                    query_str = query_str.replace("'", r"\'")
+                    
+                    insert_log['success'] = 0
+                    insert_log['error_message'] = query_str
+                    
+                    flash(f'An error occured while updating your account..', 'danger')
                     return redirect(url_for('account_page.account'))
-            
+                log = Model("t_logs").insert_into_single_record(fields_values=insert_log)
+                
             # query gender id
             model = Model("t_genders")
             filter = Filter(where=f"`gender` = '{form.gender.data}'")
@@ -125,12 +270,31 @@ def account():
                 model = Model("t_users")
                 filter = Filter(where=f"`id` = {query_user['id']}") 
                 session['gender'] = gender
-                query = model.update_rows(fields_values={'gender':gender}, filter=filter)
+                sql, query = model.update_rows(fields_values={'gender':gender}, filter=filter, return_sql_query=True)
+                
+                sql = str(sql).replace('"', r'\"')
+                sql = sql.replace("'", r"\'")
+                
+                insert_log = {
+                    'user_id'       : query_user['id'],
+                    'log_type_id'   : Model("t_log_types").query_one_row(filter=Filter(where="`log_type` = 'update_user_gender'"), fields= ['id'])['id'],
+                    'sql_executed'  : sql,
+                    'value_before'  : query_user['gender'],
+                    'value_after'   : gender,
+                    'success'       : 1
+                }
 
                 if query is not True:
+                    
+                    query_str = str(query).replace('"', r'\"')
+                    query_str = query_str.replace("'", r"\'")
+                    
+                    insert_log['success'] = 0
+                    insert_log['error_message'] = query_str
+                    
                     flash(f'An error occured while updating your account.. {query} gender', 'danger')
                     return redirect(url_for('account_page.account'))
-            
+                log = Model("t_logs").insert_into_single_record(fields_values=insert_log)
             
                 
             

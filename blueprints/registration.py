@@ -38,14 +38,26 @@ def register():
             flash("Something went wrong..")
             return render_template('register/register.html', title="S'inscrire", form=form)
         
+        fname = str(form.fname.data).replace('"', r'\"')
+        fname = fname.replace("'", r"\'")
+        
+        lname = str(form.lname.data).replace('"', r'\"')
+        lname = fname.replace("'", r"\'")
+        
+        email = str(form.email.data).replace('"', r'\"')
+        email = email.replace("'", r"\'")
+        
+        username = str(form.username.data).replace('"', r'\"')
+        username = username.replace("'", r"\'")
+        
         # dict insert datas
         insert = {
             'permission'                : 1,
-            'first_name'                : form.fname.data,
-            'last_name'                 : form.lname.data,
-            'email'                     : form.email.data,
+            'first_name'                : fname,
+            'last_name'                 : lname,
+            'email'                     : email,
             'country'                   : country_id,
-            'username'                  : form.username.data,
+            'username'                  : username,
             'password'                  : sha256_crypt.hash(str(form.password.data)),
             'reset_password_permission' : "no_reset",
             'files'                     : "admin.png",
@@ -72,9 +84,8 @@ def register():
                 'success'       : 0,
                 'error_message' : query_str
             }
-            
-            log = Model("t_logs")
-            res = log.insert_into_single_record(fields_values=insert_log)
+             
+            res = Model("t_logs").insert_into_single_record(fields_values=insert_log)
             # error message if duplicate entry
             if query.args[0] == 1062:
                 if "username" in query.args[1]:
