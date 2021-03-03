@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+{% block content %}
+<legend class="border-bottom mb-4">Suppression d'un utilisateur</legend>
+<p>Êtes-vous certains de vouloir supprimer l'utilisateur {{ user }} ?</p>
+<a class="btn btn-danger" href="{{ url_for('admin_user_page.confirm_user_delete', username=user) }}">Supprimer</a>
+<a class="btn btn-secondary" href="{{ url_for('admin_user_page.admin_users') }}">Revenir aux utilisateurs</a>
+{% endblock content %}

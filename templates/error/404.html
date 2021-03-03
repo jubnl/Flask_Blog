@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+<div id="notfound">
+    <div class="notfound">
+        <div class="notfound-404">
+            <h1>ERREUR</h1>
+        </div>
+        <h2>404 - ERREUR</h2>
+        <p>Cette page n'existe pas</p>
+        <p class='text-muted'>
+            <ul class="list-group">
+                <a class="btn btn-block" href="{{ url_for('home_page.home') }}"><li class="list-group-item list-group-item-light">Page d'accueil</li></a>
+            </ul>
+        </p>
+    </div>
+</div>
+{% endblock content %}

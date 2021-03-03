@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Permission</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <th scope="row">{{ user['id']}}</th>
+                <td>{{ user['permission'] }}</td>
+                <td>{{ user['username']}}</td>
+                <td>{{ user['email']}}</td>
+                <td><a class="btn btn-secondary mr-1" href="{{ url_for('admin_user_page.admin_edit_user', username = user['username']) }}">Edit</a><a class="btn btn-danger ml-1" href="{{ url_for('admin_user_page.admin_delete_user', username = user['username']) }}">Delete</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

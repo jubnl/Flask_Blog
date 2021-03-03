@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+    <a  class="btn btn-block btn-secondary mb-4" href="{{ url_for('admin_page.admin') }}">Back to the admin page</a>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Log date</th>
+            <th scope="col">Author</th>
+            <th scope="col">Log type</th>
+            <th scope="col">Success</th>
+            <th scope="col">Detail</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for log in logs %}
+            <tr>
+                <th scope="row">{{ log['id']}}</th>
+                <td>{{ log['log_date'] }}</td>
+                <td>{{ log['user_id']}}</td>
+                <td>{{ log['log_type_id']}}</td>
+                <td>{{ log['success'] }}</td>
+                <td><a class="btn btn-secondary" href="{{ url_for('admin_logs_page.log', id = log['id']) }}">Detail</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

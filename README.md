@@ -16,6 +16,10 @@ Enjoy !
 
 Veuillez ouvrir une issue en cas de problème !
 
+Il y a un compte admin existant de base :
+- email : exemple@exemple.com
+- password : Exemple123$
+
 ## Petite précision
 
 Pour le moment il n'y a que la partie création de compte, login et logout, compte et update de compte qui sont fonctionnels. Des nouvelles fonctionnalités seront disponible d'ici peu.

@@ -22,20 +22,23 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarToggle">
                         <div class="navbar-nav mr-auto">
-                            <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
-                            <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
+                            <a class="nav-item nav-link" href="{{ url_for('home_page.home') }}">Home</a>
+                            <a class="nav-item nav-link" href="{{ url_for('home_page.about') }}">About</a>
                         </div>
                         <!-- Navbar Right Side -->
                         <div class="navbar-nav">
                             {% if session.user_logged_in %}
-                                {% if session.perms == "admin" %}
-                                    <a class="nav-item nav-link" href="{{ url_for('admin') }}">Admin</a>
+                                {% if session.perms == 3 %}
+                                    <a class="nav-item nav-link" href="{{ url_for('admin_page.admin') }}">Admin</a>
                                 {% endif %}
-                                <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
-                                <a class="nav-item nav-link" href="{{ url_for('logout') }}">logout</a>
+                                <a class="nav-item nav-link" href="{{ url_for('account_page.account') }}">Account</a>
+                                <a class="nav-item nav-link" href="{{ url_for('authentification.logout') }}">logout</a>
+                                {% if session.perms == 3 %}
+                                    <a class="nav-item nav-link" href="{{ url_for('registration.register') }}">Register</a>
+                                {% endif %}
                             {% else %}
-                                <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
-                                <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+                                <a class="nav-item nav-link" href="{{ url_for('authentification.login') }}">Login</a>
+                                <a class="nav-item nav-link" href="{{ url_for('registration.register') }}">Register</a>
                             {% endif %}
                         </div>
                     </div>
@@ -44,7 +47,11 @@
         </header>
         <main role="main" class="container">
             <div class="row">
-                <div class="col-md-8">
+                {% if sidebar == True %}
+                    <div class="col-md-8">
+                {% else %}
+                    <div class="col-md-12">
+                {% endif %}
                     {% with messages = get_flashed_messages(with_categories=true) %}
                         {% if messages %}
                             {% for category, message in messages %}
@@ -56,19 +63,21 @@
                     {% endwith %}
                     {% block content %}{% endblock %}
                 </div>
-                <div class="col-md-4">
-                    <div class="content-section">
-                        <h3>Our Sidebar</h3>
-                        <p class='text-muted'>You can put any information here you'd like.
-                            <ul class="list-group">
-                                <li class="list-group-item list-group-item-light">Latest Posts</li>
-                                <li class="list-group-item list-group-item-light">Announcements</li>
-                                <li class="list-group-item list-group-item-light">Calendars</li>
-                                <li class="list-group-item list-group-item-light">etc</li>
-                            </ul>
-                        </p>
+                {% if sidebar == True %}
+                    <div class="col-md-4">
+                        <div class="content-section">
+                            <h3>Our Sidebar</h3>
+                            <p class='text-muted'>You can put any information here you'd like.
+                                <ul class="list-group">
+                                    <li class="list-group-item list-group-item-light">Latest Posts</li>
+                                    <li class="list-group-item list-group-item-light">Announcements</li>
+                                    <li class="list-group-item list-group-item-light">Calendars</li>
+                                    <li class="list-group-item list-group-item-light">etc</li>
+                                </ul>
+                            </p>
+                        </div>
                     </div>
-                </div>
+                {% endif %}
             </div>
           </main>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
