@@ -33,6 +33,9 @@
                                 {% endif %}
                                 <a class="nav-item nav-link" href="{{ url_for('account_page.account') }}">Account</a>
                                 <a class="nav-item nav-link" href="{{ url_for('authentification.logout') }}">logout</a>
+                                {% if session.perms == 3 %}
+                                    <a class="nav-item nav-link" href="{{ url_for('registration.register') }}">Register</a>
+                                {% endif %}
                             {% else %}
                                 <a class="nav-item nav-link" href="{{ url_for('authentification.login') }}">Login</a>
                                 <a class="nav-item nav-link" href="{{ url_for('registration.register') }}">Register</a>

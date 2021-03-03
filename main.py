@@ -20,7 +20,7 @@ app = Flask(__name__)
 # >>> secrets.token_hex()
 # 'd636881cff3a920fffd007dd5f4222cd140ffc68e3d83223ac84adcd027e19b3'
 
-app.config['SECRET_KEY'] = 'd636881cff3a920fffd007dd5f4222cd140ffc68e3d83223ac84adcd027e19b3'
+app.config['SECRET_KEY'] = '179ac44220eba6212e3843824faaa6ff1e45d3c847a51f22204dbc9b2791d40d'
 
 
 app.register_blueprint(account_page)
@@ -35,5 +35,5 @@ app.register_blueprint(registration)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
 

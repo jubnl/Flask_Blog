@@ -292,7 +292,7 @@ def account():
                     insert_log['success'] = 0
                     insert_log['error_message'] = query_str
                     
-                    flash(f'An error occured while updating your account.. {query} gender', 'danger')
+                    flash('An error occured while updating your account..', 'danger')
                     return redirect(url_for('account_page.account'))
                 log = Model("t_logs").insert_into_single_record(fields_values=insert_log)
             
