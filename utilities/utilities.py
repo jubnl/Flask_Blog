@@ -41,7 +41,7 @@ def conn_db():
     return conn
 
 
-def parse_sql(filename):
+def parse_sql(filename:str):
     data = open(filename, 'r').readlines()
     stmts = []
     DELIMITER = ';'
