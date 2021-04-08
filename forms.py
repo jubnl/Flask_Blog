@@ -33,11 +33,8 @@ class RegistrationForm(FlaskForm):
         ]
     )
     
-    model = Model("t_genders")
-    query = model.query_all_rows(fields=['gender'])
-    choices = []
-    for i in query:
-        choices.append(i['gender'])
+    query = Model("t_genders").query_all_rows(fields=['gender'])
+    choices = [i['gender'] for i in query]
     
     gender = SelectField("Genre",
         validators=[
