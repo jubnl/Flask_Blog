@@ -8,7 +8,7 @@ from blueprints.authentification import authentification
 from blueprints.error_handler import error_handler
 from blueprints.home import home_page
 from blueprints.registration import registration
-from flask import Flask
+from flask import Flask, url_for, redirect
 
 
 
@@ -33,6 +33,9 @@ app.register_blueprint(error_handler)
 app.register_blueprint(home_page)
 app.register_blueprint(registration)
 
+@app.route('/favicon.ico')
+def favicon():
+    return redirect(url_for('static', filename='favicon.ico'))
 
 if __name__ == '__main__':
     app.run()
